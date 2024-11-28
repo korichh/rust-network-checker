@@ -20,7 +20,7 @@ pub struct Options {
 }
 
 pub fn get_options() -> Options {
-    let json_string = read_to_string("options.json").expect("Failed to read options.json");
+    let json_string = read_to_string("options.json").unwrap();
     return serde_json::from_str::<Options>(&json_string).unwrap();
 }
 
@@ -72,3 +72,8 @@ pub async fn get_arp(main_ip: String) -> Output {
         .await
         .unwrap();
 }
+
+// let mut ping_rx = ping_lan(String::from("192.168.0"), 25).await;
+// while let Some(count_tx) = ping_rx.recv().await {
+//     println!("Progress: ping {}/255", count_tx);
+// }
