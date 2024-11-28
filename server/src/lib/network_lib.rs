@@ -1,7 +1,4 @@
-use serde::{Deserialize, Serialize};
-use serde_json;
 use std::{
-    fs::read_to_string,
     process::Output,
     sync::{
         atomic::{AtomicUsize, Ordering},
@@ -12,17 +9,6 @@ use tokio::{
     process::Command,
     sync::{mpsc, Semaphore},
 };
-
-#[derive(Deserialize, Serialize, Debug)]
-pub struct Options {
-    pub subnet: String,
-    pub tasks_limit: usize,
-}
-
-pub fn get_options() -> Options {
-    let json_string = read_to_string("options.json").unwrap();
-    return serde_json::from_str::<Options>(&json_string).unwrap();
-}
 
 pub async fn clean_arp() {
     let _ = Command::new("powershell")
