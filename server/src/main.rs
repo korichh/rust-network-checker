@@ -1,6 +1,6 @@
 pub mod api;
 pub mod config;
-// pub mod lib;
+pub mod lib;
 pub mod ws;
 
 use axum::Router;

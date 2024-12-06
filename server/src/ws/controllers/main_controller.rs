@@ -10,7 +10,7 @@ pub async fn get(ws: WebSocketUpgrade) -> Response {
         while let Some(Ok(msg)) = socket.recv().await {
             match msg {
                 Message::Text(text) => match text.as_str() {
-                    "hello" => main_handler::hello(&mut socket, text).await,
+                    "ping" => main_handler::ping(&mut socket, text).await,
                     _ => (),
                 },
                 _ => (),

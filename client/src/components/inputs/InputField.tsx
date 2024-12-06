@@ -1,4 +1,5 @@
 import { Field, ErrorMessage } from "formik";
+import Button from "../Button";
 
 interface InputFieldProps {
   name: string;
@@ -21,12 +22,10 @@ export default function InputField({
         </label>
       )}
       {type === "submit" ? (
-        <button
+        <Button
           type={type}
-          className={`w-full h-[40px] px-3 bg-secondary-main text-white hover:opacity-80 rounded-lg transition-all`}
-        >
-          {placeholder}
-        </button>
+          text={placeholder}
+        />
       ) : (
         <Field
           id={name}

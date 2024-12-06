@@ -1,9 +1,7 @@
-use std::{
-    process::Output,
-    sync::{
-        atomic::{AtomicUsize, Ordering},
-        Arc,
-    },
+use encoding_rs::IBM866;
+use std::sync::{
+    atomic::{AtomicUsize, Ordering},
+    Arc,
 };
 use tokio::{
     process::Command,
@@ -12,7 +10,8 @@ use tokio::{
 
 pub async fn clean_arp() {
     let _ = Command::new("powershell")
-        .arg("arp -d")
+        .arg("-File")
+        .arg("ps/clean_arp.ps1")
         .output()
         .await
         .unwrap();
@@ -45,21 +44,23 @@ pub async fn ping_lan(subnet: String, tasks_limit: usize) -> mpsc::Receiver<usiz
 
 pub async fn ping_ip(ip: String) {
     let _ = Command::new("powershell")
-        .arg(format!("ping -n 1 -w 1 -l 1 -i 1 {}", ip))
+        .arg("-File")
+        .arg("ps/ping_ip.ps1")
+        .arg("-ip")
+        .arg(ip)
         .output()
         .await
         .unwrap();
 }
 
-pub async fn get_arp(main_ip: String) -> Output {
-    return Command::new("powershell")
-        .arg(format!("arp -a -N {} | Select-String \"192.168\"", main_ip))
+pub async fn get_arp() -> String {
+    let output = Command::new("powershell")
+        .arg("-File")
+        .arg("ps/get_arp.ps1")
         .output()
         .await
         .unwrap();
-}
 
-// let mut ping_rx = ping_lan(String::from("192.168.0"), 25).await;
-// while let Some(count_tx) = ping_rx.recv().await {
-//     println!("Progress: ping {}/255", count_tx);
-// }
+    let (decoded, _, _) = IBM866.decode(&output.stdout);
+    return decoded.into_owned();
+}
