@@ -1,6 +1,6 @@
 use axum::extract::ws::{Message, WebSocket};
 
-use crate::lib::network_lib::{clean_arp, get_arp, ping_lan};
+use crate::utils::network_utils::{clean_arp, get_arp, ping_lan};
 
 pub async fn ping(socket: &mut WebSocket, _: String) {
     let mut message: String;
@@ -21,10 +21,7 @@ pub async fn ping(socket: &mut WebSocket, _: String) {
     message = "loading".to_string();
     send_message(socket, &message).await;
 
-    message = "arp".to_string();
-    send_message(socket, &message).await;
-
-    message = get_arp().await;
+    message = "arp".to_string() + &get_arp().await;
     send_message(socket, &message).await;
 }
 

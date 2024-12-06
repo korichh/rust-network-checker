@@ -6,8 +6,8 @@ import Loading from "../components/Loading";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isArp, setIsArp] = useState<boolean>(false);
-  const [pingMessage, setPingMessage] = useState<string>("");
+  const [loadingText, setLoadingText] = useState<string>("");
+  const [pingList, setPingList] = useState<string[]>([]);
 
   useEffect(() => {
     Ws.onmessage = (e: MessageEvent) => {
@@ -15,10 +15,10 @@ export default function Home() {
 
       if (message === "loading") {
         setIsLoading((prev) => !prev);
-      } else if (message === "arp") {
-        setIsArp((prev) => !prev);
+      } else if (message.startsWith("arp")) {
+        setPingList(message.slice(3).split("\r\n"))
       } else {
-        setPingMessage(message);
+        setLoadingText(message);
       }
     };
 
@@ -37,12 +37,20 @@ export default function Home() {
 
   return (
     <main className="flex-grow py-8 px-4">
-      <Loading isLoading={isLoading} text={pingMessage} />
+      <Loading isLoading={isLoading} text={loadingText} />
       <div className="flex items-start justify-between">
         <Title text="LAN list" />
         <Button onClick={refreshLanList} type="submit" text="Refresh" className="max-w-[100px]" />
       </div>
-      {isArp && pingMessage}
+      {pingList.length > 0 ? (
+        <ul>
+          {pingList.map(str => (
+            <li>{str}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>List is empty.</p>
+      )}
     </main>
   );
 }
