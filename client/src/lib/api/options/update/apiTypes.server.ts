@@ -4,6 +4,4 @@ export interface UpdateOptionsRequestApi {
 	interval: number;
 }
 
-export interface UpdateOptionsResponseApi {
-	message: string;
-}
+export interface UpdateOptionsResponseApi { }

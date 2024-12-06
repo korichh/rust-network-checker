@@ -10,6 +10,7 @@ export default {
       "primary": "var(--primary)",
       "secondary": "var(--secondary)",
       "error": "var(--error)",
+      "success": "var(--success)",
       "white": "var(--white)",
       "secondary-main": "var(--secondary-main)",
       "secondary-light": "var(--secondary-light)",

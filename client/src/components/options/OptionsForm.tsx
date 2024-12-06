@@ -1,34 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FormikHelpers } from "formik";
 import { IOptionsSchema, optionsSchema } from "../../lib/validation";
-import { Api } from "../../lib/api";
 import Form from "../Form";
 import InputField from "../inputs/InputField";
+import { Api } from "../../lib/api";
+import { useOptionsStore } from "../../lib/store";
 
 export default function OptionsForm() {
-  const [initialValues, setInitialValues] = useState<IOptionsSchema>({
-    subnet: "192.168.0",
-    tasks_limit: 1,
-    interval: 30,
-  });
+  const options = useOptionsStore((store) => store.options);
+  const setOptions = useOptionsStore((store) => store.setOptions);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  useEffect(() => {
-    (async () => {
-      const options = await Api.getOptions({});
+  if (!options) return null;
 
-      console.log(options);
-    })();
-  }, []);
+  const initialValues: IOptionsSchema = options;
 
   async function handleSubmit(
     values: IOptionsSchema,
-    actions: FormikHelpers<IOptionsSchema>
+    _: FormikHelpers<IOptionsSchema>
   ) {
     try {
-      setInitialValues(values);
-      actions.resetForm();
+      if (!isSubmitted) {
+        await Api.updateOptions(values);
+        setOptions(values);
 
-      console.log(values);
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 1500);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -40,6 +38,7 @@ export default function OptionsForm() {
       validationSchema={optionsSchema}
       onSubmit={handleSubmit}
     >
+      <div className={`text-success bg-white px-4 py-3 border-l-4 border-success mb-4 ${isSubmitted ? "" : "hidden"}`}>Options Updated!</div>
       <InputField name="subnet" type="text" placeholder="192.168.x" label="Enter subnet" />
       <InputField name="tasks_limit" type="number" placeholder="25" label="Enter tasks limit" />
       <InputField name="interval" type="number" placeholder="30" label="Enter interval" />
