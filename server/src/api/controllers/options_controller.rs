@@ -2,19 +2,20 @@ use axum::{http::StatusCode, response::Json};
 use serde::{Deserialize, Serialize};
 use serde_json;
 
-use crate::api::services::config_service;
+use crate::api::services::options_service;
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Options {
     pub subnet: Option<String>,
     pub tasks_limit: Option<usize>,
+    pub interval: Option<usize>,
 }
 
 pub async fn get() -> Result<Json<serde_json::Value>, (StatusCode, String)> {
-    let options = config_service::get();
+    let options = options_service::get();
     let response = serde_json::json!({
-        "data": options,
-        "message": "Options retrieved"
+        "message": "Options retrieved",
+        "data": options
     });
 
     return Ok(Json(response));
@@ -23,11 +24,11 @@ pub async fn get() -> Result<Json<serde_json::Value>, (StatusCode, String)> {
 pub async fn post(
     Json(payload): Json<Options>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, String)> {
-    if payload.subnet.is_none() || payload.tasks_limit.is_none() {
+    if payload.subnet.is_none() || payload.tasks_limit.is_none() || payload.interval.is_none() {
         return Err((StatusCode::BAD_REQUEST, "Invalid arguments".to_string()));
     }
 
-    config_service::post(payload);
+    options_service::post(payload);
     let response = serde_json::json!({
         "message": "Options updated"
     });

@@ -1,6 +1,6 @@
 use std::fs;
 
-use crate::api::controllers::config_controller::Options;
+use crate::api::controllers::options_controller::Options;
 
 pub fn get() -> Options {
     let json_path = "options.json";

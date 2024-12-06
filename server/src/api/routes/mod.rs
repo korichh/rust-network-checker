@@ -1,7 +1,7 @@
-pub mod config_routes;
+pub mod options_routes;
 
 use axum::Router;
 
 pub fn get() -> Router {
-    return Router::new().nest("/config", config_routes::get());
+    return Router::new().nest("/options", options_routes::get());
 }

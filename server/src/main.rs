@@ -12,12 +12,14 @@ pub async fn main() {
 
     let api_router = api::create().await;
     let ws_router = ws::create().await;
+    let cors = api::middlewares::get_cors();
 
-    let app = Router::new()
-        .nest("/api", api_router)
-        .nest("/ws", ws_router);
     let address = format!("{}:{}", &config.host, &config.port);
     let listener = TcpListener::bind(&address).await.unwrap();
+    let app = Router::new()
+        .nest("/api", api_router)
+        .nest("/ws", ws_router)
+        .layer(cors);
 
     println!(
         "API is listening at http://{}/api\nWS is listening at ws://{}/ws",

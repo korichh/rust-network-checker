@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: rgb(33, 33, 33);
+    --secondary: rgb(210, 210, 210);
+    --error: rgb(227, 12, 12);
+    --white: rgb(255, 255, 255);
+    --secondary-main: rgb(0, 188, 212);
+    --secondary-light: rgb(178, 235, 242);
+    --secondary-dark: rgb(0, 96, 100);
+    --default-light: rgb(250, 250, 250);
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+    appearance: none;
+    margin: 0;
+  }
+}
