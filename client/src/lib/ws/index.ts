@@ -3,3 +3,5 @@ export const Ws = (() => {
 
   return new WebSocket(baseURL);
 })();
+
+Ws.onerror = console.error;

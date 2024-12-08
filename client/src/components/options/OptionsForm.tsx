@@ -4,7 +4,7 @@ import { Api } from "../../lib/api";
 import { useOptionsStore } from "../../lib/store";
 import { IOptionsSchema, optionsSchema } from "../../lib/validation";
 import Form from "../Form";
-import InputField from "../inputs/InputField";
+import InputField from "./InputField";
 
 export default function OptionsForm() {
   const options = useOptionsStore((store) => store.options);
@@ -12,7 +12,6 @@ export default function OptionsForm() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   if (!options) return null;
-
   const initialValues: IOptionsSchema = options;
 
   async function handleSubmit(

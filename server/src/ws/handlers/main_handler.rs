@@ -14,7 +14,7 @@ pub async fn ping(socket: &mut WebSocket, _: String) {
     message = "loading".to_string();
     send_message(socket, &message).await;
 
-    message = "Progress: cleaning arp data".to_string();
+    message = "Progress: cleaning net".to_string();
     send_message(socket, &message).await;
     clean_arp().await;
 
@@ -30,7 +30,7 @@ pub async fn ping(socket: &mut WebSocket, _: String) {
         send_message(socket, &message).await;
     }
 
-    message = "Progress: retrieving arp data".to_string();
+    message = "Progress: retrieving data".to_string();
     send_message(socket, &message).await;
 
     message = "arp".to_string() + &get_arp(subnet.clone()).await;

@@ -1,17 +1,15 @@
-import { Ws } from "../lib/ws";
+import { usePingStore } from "../lib/store";
+import { sendPing } from "../lib/utils";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import HomeList from "../components/home/HomeList";
 
 export default function Home() {
-  function onClick(e: React.MouseEvent) {
-    e.preventDefault();
+  const setRefreshAllowed = usePingStore((state) => state.setRefreshAllowed);
 
-    if (Ws && Ws.readyState === WebSocket.OPEN) {
-      Ws.send("ping");
-    } else {
-      console.error("Ws is not connected.");
-    }
+  function onClick() {
+    setRefreshAllowed(false);
+    sendPing();
   }
 
   return (

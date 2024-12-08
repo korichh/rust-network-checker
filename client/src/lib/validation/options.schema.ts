@@ -37,7 +37,7 @@ export const optionsSchema: Yup.ObjectSchema<IOptionsSchema> = Yup.object().shap
     .required("tasks limit is required"),
   interval: Yup.number()
     .typeError("interval is number")
-    .min(30, "set interval between 30 and 120")
-    .max(120, "set interval between 30 and 120")
+    .min(5, "set interval between 5 and 120")
+    .max(120, "set interval between 5 and 120")
     .required("interval is required"),
 });
