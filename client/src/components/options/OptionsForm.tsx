@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FormikHelpers } from "formik";
+import { Api } from "../../lib/api";
+import { useOptionsStore } from "../../lib/store";
 import { IOptionsSchema, optionsSchema } from "../../lib/validation";
 import Form from "../Form";
 import InputField from "../inputs/InputField";
-import { Api } from "../../lib/api";
-import { useOptionsStore } from "../../lib/store";
 
 export default function OptionsForm() {
   const options = useOptionsStore((store) => store.options);

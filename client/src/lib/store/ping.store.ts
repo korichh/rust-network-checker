@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface IPingStore {
   isLoading: boolean;
-  setIsLoading: (updater: (isLoading: boolean) => boolean) => void;
+  setIsLoading: (isLoading: boolean) => void;
   loadingText: string;
   setLoadingText: (loadingText: string) => void;
   pingList: string[];
@@ -11,7 +11,7 @@ interface IPingStore {
 
 export const usePingStore = create<IPingStore>((set) => ({
   isLoading: false,
-  setIsLoading: (updater) => set((state) => ({ isLoading: updater(state.isLoading) })),
+  setIsLoading: (isLoading) => set({ isLoading }),
   loadingText: "",
   setLoadingText: (loadingText) => set({ loadingText }),
   pingList: [],

@@ -23,7 +23,7 @@ pub async fn ping_lan(subnet: String, tasks_limit: usize) -> mpsc::Receiver<usiz
 
     let (tx, rx) = mpsc::channel(100);
 
-    for i in 1..255 {
+    for i in 100..150 {
         let ip = format!("{}.{}", subnet, i);
         let permits = Arc::clone(&permits);
         let count = Arc::clone(&count);
@@ -53,10 +53,14 @@ pub async fn ping_ip(ip: String) {
         .unwrap();
 }
 
-pub async fn get_arp() -> String {
+pub async fn get_arp(subnet: String) -> String {
+    let subnet_pattern = subnet.replace(".", "\\.");
+
     let output = Command::new("powershell")
         .arg("-File")
         .arg("ps/get_arp.ps1")
+        .arg("-subnetPattern")
+        .arg(subnet_pattern)
         .output()
         .await
         .unwrap();
