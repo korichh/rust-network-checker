@@ -1,7 +1,8 @@
 interface TitleProps {
   text: string;
+  className?: string;
 }
 
-export default function Title({ text }: TitleProps) {
-  return <h1 className="text-2xl font-bold mb-4">{text}</h1>
+export default function Title({ text, className = "" }: TitleProps) {
+  return <h1 className={`${className} text-2xl font-bold`}>{text}</h1>
 }

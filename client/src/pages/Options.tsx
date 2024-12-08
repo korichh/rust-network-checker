@@ -4,7 +4,7 @@ import OptionsForm from "../components/options/OptionsForm";
 export default function Options() {
   return (
     <main className="flex-grow py-8 px-4">
-      <Title text="Edit Options" />
+      <Title text="Edit Options" className="mb-4" />
       <OptionsForm />
     </main>
   );

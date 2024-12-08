@@ -44,31 +44,33 @@ export default function Home() {
   return (
     <main className="flex-grow py-8 px-4">
       <Loading isLoading={isLoading} text={loadingText} />
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between mb-4">
         <Title text="LAN list" />
         <Button onClick={refreshLanList} type="submit" text="Refresh" className="max-w-[100px]" />
       </div>
       {pingList.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>IP Address</th>
-              <th>MAC Address</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pingList.map(str => (
-              <tr key={str}>
-                <td><Icon name="device" className="w-[30px] h-[30px] fill-secondary-main" /></td>
-                {str.split("|").map(item => (
-                  <td key={item}>{item}</td>
-                ))}
+        <div className="relative overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-secondary-light">
+              <tr>
+                <th className="text-left px-6 py-3"></th>
+                <th className="text-left px-6 py-3">IP Address</th>
+                <th className="text-left px-6 py-3">MAC Address</th>
+                <th className="text-left px-6 py-3">Type</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pingList.map(str => (
+                <tr key={str} className="border-b border-secondary-light">
+                  <td className="px-6 py-3"><Icon name="device" className="w-[30px] h-[30px] fill-secondary-main" /></td>
+                  {str.split("|").map(item => (
+                    <td key={item} className="px-6 py-3">{item}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p>List is empty.</p>
       )}
