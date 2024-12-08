@@ -1,5 +1,7 @@
 {
   "subnet": "192.168.0",
+  "range_start": 100,
+  "range_end": 150,
   "tasks_limit": 15,
   "interval": 30
 }

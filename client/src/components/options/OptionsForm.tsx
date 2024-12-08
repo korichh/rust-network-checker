@@ -40,6 +40,10 @@ export default function OptionsForm() {
     >
       <div className={`text-success bg-white px-4 py-3 border-l-4 border-success mb-4 ${isSubmitted ? "" : "hidden"}`}>Options Updated!</div>
       <InputField name="subnet" type="text" placeholder="192.168.x" label="Enter subnet" />
+      <div className="flex gap-4">
+        <InputField name="range_start" type="number" placeholder="1" label="Enter range start" />
+        <InputField name="range_end" type="number" placeholder="255" label="Enter range end" />
+      </div>
       <InputField name="tasks_limit" type="number" placeholder="25" label="Enter tasks limit" />
       <InputField name="interval" type="number" placeholder="30" label="Enter interval" />
       <InputField name="submit" type="submit" placeholder="Submit" />

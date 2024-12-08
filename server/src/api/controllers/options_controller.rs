@@ -7,6 +7,8 @@ use crate::api::services::options_service;
 #[derive(Deserialize, Serialize, Debug)]
 pub struct Options {
     pub subnet: Option<String>,
+    pub range_start: Option<usize>,
+    pub range_end: Option<usize>,
     pub tasks_limit: Option<usize>,
     pub interval: Option<usize>,
 }

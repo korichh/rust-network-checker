@@ -17,13 +17,18 @@ pub async fn clean_arp() {
         .unwrap();
 }
 
-pub async fn ping_lan(subnet: String, tasks_limit: usize) -> mpsc::Receiver<usize> {
+pub async fn ping_lan(
+    subnet: String,
+    tasks_limit: usize,
+    range_start: usize,
+    range_end: usize,
+) -> mpsc::Receiver<usize> {
     let permits = Arc::new(Semaphore::new(tasks_limit));
     let count = Arc::new(AtomicUsize::new(0));
 
     let (tx, rx) = mpsc::channel(100);
 
-    for i in 100..150 {
+    for i in range_start..range_end {
         let ip = format!("{}.{}", subnet, i);
         let permits = Arc::clone(&permits);
         let count = Arc::clone(&count);

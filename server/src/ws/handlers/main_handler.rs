@@ -8,6 +8,8 @@ pub async fn ping(socket: &mut WebSocket, _: String) {
     let options = options_service::get();
     let subnet = options.subnet.unwrap();
     let tasks_limit = options.tasks_limit.unwrap();
+    let range_start = options.range_start.unwrap();
+    let range_end = options.range_end.unwrap();
 
     message = "loading".to_string();
     send_message(socket, &message).await;
@@ -16,9 +18,15 @@ pub async fn ping(socket: &mut WebSocket, _: String) {
     send_message(socket, &message).await;
     clean_arp().await;
 
-    let mut ping_rx = ping_lan(subnet.clone(), tasks_limit.clone()).await;
+    let mut ping_rx = ping_lan(
+        subnet.clone(),
+        tasks_limit.clone(),
+        range_start.clone(),
+        range_end.clone(),
+    )
+    .await;
     while let Some(count_tx) = ping_rx.recv().await {
-        message = format!("Progress: ping {}/255", count_tx);
+        message = format!("Progress: ping {}/{}", range_start + count_tx, range_end);
         send_message(socket, &message).await;
     }
 
