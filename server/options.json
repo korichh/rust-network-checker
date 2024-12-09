@@ -3,5 +3,5 @@
   "range_start": 100,
   "range_end": 120,
   "tasks_limit": 15,
-  "interval": 30
+  "interval": 120
 }

@@ -40,7 +40,11 @@ export default function App() {
         setIsLoading(false);
       }
     })();
-  }, [setOptions, sendPing, setRefreshAllowed, setIsLoading]);
+  }, [
+    setOptions,
+    setRefreshAllowed,
+    setIsLoading
+  ]);
 
   useEffect(() => {
     setTime(options?.interval || 0);
@@ -72,14 +76,12 @@ export default function App() {
     };
   }, [
     options?.interval,
-    options?.interval,
     options?.subnet,
     options?.range_start,
     options?.range_end,
     options?.tasks_limit,
     refreshAllowed,
     setTime,
-    sendPing,
     setRefreshAllowed
   ]);
 
@@ -102,7 +104,12 @@ export default function App() {
     return () => {
       Ws.onmessage = null;
     };
-  }, [setLoadingText, setIsLoading, setPingList, setRefreshAllowed]);
+  }, [
+    setLoadingText,
+    setIsLoading,
+    setPingList,
+    setRefreshAllowed
+  ]);
 
   return (
     <Router>
